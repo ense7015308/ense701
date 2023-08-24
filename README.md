@@ -1,2 +1,2 @@
 # ense701
-Fahim Kaidawala, Jasmine Amohia, and Katie Li
+Fahim Kaidawala, Ferris Nakasha, Jasmine Amohia, and Katie Li
