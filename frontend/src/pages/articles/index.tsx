@@ -7,11 +7,12 @@ interface Article {
   id: string;
   title: string;
   authors: string[];
-  source: string;
+  journname: string;
   pubyear: number;
+  volume: number;
+  num: number;
+  pages: string;
   doi: string;
-  claim: string;
-  evidence: string;
 }
 
 const Articles = () => {
@@ -20,11 +21,12 @@ const Articles = () => {
   const headers = [
     { key: "title", label: "Title" },
     { key: "authors", label: "Authors" },
-    { key: "source", label: "Source" },
+    { key: "journname", label: "Journal Name" },
     { key: "pubyear", label: "Publication Year" },
+    { key: "volume", label: "Volume" },
+    { key: "num", label: "Number" },
+    { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
-    { key: "claim", label: "Claim" },
-    { key: "evidence", label: "Evidence" },
   ];
 
   useEffect(() => {
