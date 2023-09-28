@@ -130,7 +130,7 @@ const NewDiscussion = () => {
           +
         </button>
 
-        <label htmlFor="journName">Source:</label>
+        <label htmlFor="journName">Journal Name:</label>
         <input
           className={formStyles.formItem}
           type="text"
