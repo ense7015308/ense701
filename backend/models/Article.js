@@ -10,19 +10,22 @@ const ArticleSchema = new mongoose.Schema({
   authors: [{
     type: String,
   }],
-  source: {
+  journname: {
     type: String,
   },
   pubyear: {
     type: Number,
   },
+  volume: {
+    type: Number,
+  },
+  num: {
+    type: Number,
+  },
+  pages: {
+    type: String,
+  },
   doi: {
-    type: String,
-  },
-  claim: {
-    type: String,
-  },
-  evidence: {
     type: String,
   },
 });
