@@ -13,6 +13,7 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
           <th
             key={header.key}
             style={{ width: header.key === "doi" ? "20%" : "auto" }}
+            // Set the width of the DOI column to 10%, other columns adjust automatically
           >
             {header.label}
           </th>
