@@ -1,11 +1,19 @@
+/*
+  name:   new.tsx
+  desc:   page for user to add new articles using a provided form
+*/
+
+// imports
 import React, { useState } from "react";
 import formStyles from "../../styles/Form.module.scss";
 import axios from 'axios';
 import config from "../../config";
 import { useRouter } from "next/router";
 
+// constant 
 const NewDiscussion = () => {
-  
+
+  // initialise constants for form input
   const [title, setTitle] = useState("");
   const [authors, setAuthors] = useState<string[]>([]);
   const [journName, setJournName] = useState("");
@@ -15,8 +23,10 @@ const NewDiscussion = () => {
   const [pages, setPages] = useState("");
   const [doi, setDoi] = useState("");
   
+  // initialise router
   const router = useRouter();
 
+  // initialise article to include form input fields
   const [article, setArticle] = useState({
     title: '', 
     authors: [''],
@@ -35,6 +45,7 @@ const NewDiscussion = () => {
   };
 
 
+  // arrow function that write input values to article and sends to mongoDB
   const submitNewArticle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   
@@ -52,9 +63,8 @@ const NewDiscussion = () => {
     console.log(JSON.stringify(articleData));
   
     axios
-      .post(`${config.apiUrl}/api/articles`, articleData) // Use articleData here
+      .post(`${config.apiUrl}/api/articles`, articleData)
       .then(() => {
-        // ... rest of your code ...
       })
       .catch((error) => {
         console.log('Error logging article: ', error);
@@ -63,16 +73,18 @@ const NewDiscussion = () => {
     router.push('/articles');
   };
 
-  // Some helper methods for the authors array
-
+  // helper methods for the authors array
+  // increase number of authors
   const addAuthor = () => {
     setAuthors(authors.concat([""]));
   };
 
+  // remove an author
   const removeAuthor = (index: number) => {
     setAuthors(authors.filter((_, i) => i !== index));
   };
 
+  // change select author
   const changeAuthor = (index: number, value: string) => {
     setAuthors(
       authors.map((oldValue, i) => {
@@ -81,12 +93,17 @@ const NewDiscussion = () => {
     );
   };
 
-  // Return the full form
-
+  // return article page
   return (
     <div className="container">
+
+      {/* heading */}
       <h1>New Article</h1>
+
+      {/* form */}
       <form className={formStyles.form} onSubmit={submitNewArticle}>
+
+        {/* article title and entry field */}
         <label htmlFor="title">Title:</label>
         <input
           className={formStyles.formItem}
@@ -99,6 +116,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* author title, entry field, and button to add and remove author */}
         <label htmlFor="author">Authors:</label>
         {authors.map((author, index) => {
           return (
@@ -130,6 +148,7 @@ const NewDiscussion = () => {
           +
         </button>
 
+        {/* journal title and entry field */}
         <label htmlFor="journName">Journal Name:</label>
         <input
           className={formStyles.formItem}
@@ -142,6 +161,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* publication year title and entry field */}
         <label htmlFor="pubYear">Publication Year:</label>
         <input
           className={formStyles.formItem}
@@ -159,6 +179,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* volume title and entry field */}
         <label htmlFor="volume">Volume:</label>
         <input
           className={formStyles.formItem}
@@ -176,6 +197,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* number title and entry field */}
         <label htmlFor="num">Number:</label>
         <input
           className={formStyles.formItem}
@@ -193,6 +215,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* pages title and entry field */}
         <label htmlFor="pages">Pages:</label>
         <input
           className={formStyles.formItem}
@@ -205,6 +228,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* doi title and entry field */}
         <label htmlFor="doi">DOI:</label>
         <input
           className={formStyles.formItem}
@@ -217,6 +241,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* button to submit form */}
         <button className={formStyles.formItem} type="submit">
           Submit
         </button>
@@ -225,4 +250,5 @@ const NewDiscussion = () => {
   );
 };
 
+// export
 export default NewDiscussion;
