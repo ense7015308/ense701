@@ -13,26 +13,24 @@ export default function SubmissionForm() {
         <input {...register("authors")} placeholder="Authors" />
       </p>
       <p>
-        <input {...register("source")} placeholder="Source" />
+        <input {...register("journname")} placeholder="Journal Name" />
       </p>
       <p>
         <input {...register("pubyear")} placeholder="Publication Year" />
       </p>
       <p>
+        <input {...register("volume")} placeholder="Volume" />
+      </p>
+      <p>
+        <input {...register("num")} placeholder="Number" />
+      </p>
+      <p>
+        <input {...register("pages")} placeholder="Pages" />
+      </p>
+      <p>
         <input {...register("doi")} placeholder="DOI" />
       </p>
-
-      <select {...register("claim")}>
-        <option value="Code Quality Improvement">Code Quality Improvement</option>
-        <option value="Product Quality Improvement">Product Quality Improvement</option>
-      </select>
-
-      <select {...register("evidence")}>
-        <option value="Strong support">Strong support</option>
-        <option value="Weak support">Weak support</option>
-      </select>
-
       <input type="submit" />
-      </form>
+    </form>
   );
 }

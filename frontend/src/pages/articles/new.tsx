@@ -1,29 +1,41 @@
+/*
+  name:   new.tsx
+  desc:   page for user to add new articles using a provided form
+*/
+
+// imports
 import React, { useState } from "react";
 import formStyles from "../../styles/Form.module.scss";
 import axios from 'axios';
 import config from "../../config";
 import { useRouter } from "next/router";
 
+// constant 
 const NewDiscussion = () => {
-  
+
+  // initialise constants for form input
   const [title, setTitle] = useState("");
   const [authors, setAuthors] = useState<string[]>([]);
-  const [source, setSource] = useState("");
+  const [journName, setJournName] = useState("");
   const [pubYear, setPubYear] = useState<number>(0);
+  const [volume, setVolume] = useState<number>(0);
+  const [num, setNum] = useState<number>(0);
+  const [pages, setPages] = useState("");
   const [doi, setDoi] = useState("");
-  const [selectedClaim, setSelectedClaim] = useState("Code Quality Improvement");
-  const [selectedEvidence, setSelectedEvidence] = useState("Strong Support");
   
+  // initialise router
   const router = useRouter();
 
+  // initialise article to include form input fields
   const [article, setArticle] = useState({
     title: '', 
     authors: [''],
-    source: '',
+    journName: '',
     pubyear: 0,
+    volume: 0,
+    num: 0,
+    pages: '',
     doi: '',
-    claim: '',
-    evidence: '',
   })
 
   // eslint-disable-next-line no-unused-vars
@@ -33,25 +45,26 @@ const NewDiscussion = () => {
   };
 
 
+  // arrow function that write input values to article and sends to mongoDB
   const submitNewArticle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   
     const articleData = {
       title,
       authors,
-      source,
+      journName,
       pubyear: pubYear,
+      volume: volume,
+      num: num,
+      pages,
       doi,
-      claim: selectedClaim,
-      evidence: selectedEvidence,
     };
   
     console.log(JSON.stringify(articleData));
   
     axios
-      .post(`${config.apiUrl}/api/articles`, articleData) // Use articleData here
+      .post(`${config.apiUrl}/api/articles`, articleData)
       .then(() => {
-        // ... rest of your code ...
       })
       .catch((error) => {
         console.log('Error logging article: ', error);
@@ -60,16 +73,18 @@ const NewDiscussion = () => {
     router.push('/articles');
   };
 
-  // Some helper methods for the authors array
-
+  // helper methods for the authors array
+  // increase number of authors
   const addAuthor = () => {
     setAuthors(authors.concat([""]));
   };
 
+  // remove an author
   const removeAuthor = (index: number) => {
     setAuthors(authors.filter((_, i) => i !== index));
   };
 
+  // change select author
   const changeAuthor = (index: number, value: string) => {
     setAuthors(
       authors.map((oldValue, i) => {
@@ -78,12 +93,17 @@ const NewDiscussion = () => {
     );
   };
 
-  // Return the full form
-
+  // return article page
   return (
     <div className="container">
+
+      {/* heading */}
       <h1>New Article</h1>
+
+      {/* form */}
       <form className={formStyles.form} onSubmit={submitNewArticle}>
+
+        {/* article title and entry field */}
         <label htmlFor="title">Title:</label>
         <input
           className={formStyles.formItem}
@@ -96,6 +116,7 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* author title, entry field, and button to add and remove author */}
         <label htmlFor="author">Authors:</label>
         {authors.map((author, index) => {
           return (
@@ -127,18 +148,20 @@ const NewDiscussion = () => {
           +
         </button>
 
-        <label htmlFor="source">Source:</label>
+        {/* journal title and entry field */}
+        <label htmlFor="journName">Journal Name:</label>
         <input
           className={formStyles.formItem}
           type="text"
-          name="source"
-          id="source"
-          value={source}
+          name="journName"
+          id="journName"
+          value={journName}
           onChange={(event) => {
-            setSource(event.target.value);
+            setJournName(event.target.value);
           }}
         />
 
+        {/* publication year title and entry field */}
         <label htmlFor="pubYear">Publication Year:</label>
         <input
           className={formStyles.formItem}
@@ -156,6 +179,56 @@ const NewDiscussion = () => {
           }}
         />
 
+        {/* volume title and entry field */}
+        <label htmlFor="volume">Volume:</label>
+        <input
+          className={formStyles.formItem}
+          type="number"
+          name="volume"
+          id="volume"
+          value={volume}
+          onChange={(event) => {
+            const val = event.target.value;
+            if (val === "") {
+              setVolume(0);
+            } else {
+              setVolume(parseInt(val));
+            }
+          }}
+        />
+
+        {/* number title and entry field */}
+        <label htmlFor="num">Number:</label>
+        <input
+          className={formStyles.formItem}
+          type="number"
+          name="num"
+          id="num"
+          value={num}
+          onChange={(event) => {
+            const val = event.target.value;
+            if (val === "") {
+              setNum(0);
+            } else {
+              setNum(parseInt(val));
+            }
+          }}
+        />
+
+        {/* pages title and entry field */}
+        <label htmlFor="pages">Pages:</label>
+        <input
+          className={formStyles.formItem}
+          type="text"
+          name="pages"
+          id="pages"
+          value={pages}
+          onChange={(event) => {
+            setPages(event.target.value);
+          }}
+        />
+
+        {/* doi title and entry field */}
         <label htmlFor="doi">DOI:</label>
         <input
           className={formStyles.formItem}
@@ -168,26 +241,7 @@ const NewDiscussion = () => {
           }}
         />
 
-        <label htmlFor="dropdown">Select a claim option:</label>
-        <select
-          id="dropdown"
-          value={selectedClaim}
-          onChange={(event) => setSelectedClaim(event.target.value)}
-        >
-          <option value="Code Quality Improvement">Code Quality Improvement</option>
-          <option value="Product Quality Improvement">Product Quality Improvement</option>
-        </select>
-
-        <label htmlFor="dropdown">Select an evidence option:</label>
-        <select
-          id="dropdown"
-          value={selectedEvidence}
-          onChange={(event) => setSelectedEvidence(event.target.value)}
-        >
-          <option value="Strong Support">Strong Support</option>
-          <option value="Weak Support">Weak Support</option>
-        </select>
-
+        {/* button to submit form */}
         <button className={formStyles.formItem} type="submit">
           Submit
         </button>
@@ -196,4 +250,5 @@ const NewDiscussion = () => {
   );
 };
 
+// export
 export default NewDiscussion;

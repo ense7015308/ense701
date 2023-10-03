@@ -1,32 +1,45 @@
+/*
+  name:   index.tsx
+  desc:   page for user to view all added articles
+*/
+
+// imports
 import React, { useEffect, useState } from "react";
 import SortableTable from "../../components/table/SortableTable";
 import axios from "axios";
 import config from "../../config";
 
+// interface initialises article attributes and datatypes
 interface Article {
   id: string;
   title: string;
   authors: string[];
-  source: string;
+  journname: string;
   pubyear: number;
+  volume: number;
+  num: number;
+  pages: string;
   doi: string;
-  claim: string;
-  evidence: string;
 }
 
+// arrow function to fetch articles
 const Articles = () => {
+  // initialise article arraylist
   const [articles, setArticles] = useState<Article[]>([]);
 
+  // initialise article attribute headings
   const headers = [
     { key: "title", label: "Title" },
     { key: "authors", label: "Authors" },
-    { key: "source", label: "Source" },
+    { key: "journname", label: "Journal Name" },
     { key: "pubyear", label: "Publication Year" },
+    { key: "volume", label: "Volume" },
+    { key: "num", label: "Number" },
+    { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
-    { key: "claim", label: "Claim" },
-    { key: "evidence", label: "Evidence" },
   ];
 
+  // useEffect to get articles from mongodb 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -36,17 +49,22 @@ const Articles = () => {
         console.error('Error fetching articles: ', error);
       }
     };
-
     fetchArticles();
   }, []);
 
+  // return index page
   return (
     <div className="container">
+
+      {/* headings */}
       <h1>Articles Index Page</h1>
       <p>Page containing a table of articles:</p>
+
+      {/* table of articles using initialised headings */}
       <SortableTable headers={headers} data={articles} />
     </div>
   );
 };
 
+// export
 export default Articles;
