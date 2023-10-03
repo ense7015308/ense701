@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface SortableTableProps {
   headers: { key: string; label: string }[];
@@ -10,7 +10,12 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
     <thead>
       <tr>
         {headers.map((header) => (
-          <th key={header.key}>{header.label}</th>
+          <th
+            key={header.key}
+            style={{ width: header.key === "doi" ? "20%" : "auto" }}
+          >
+            {header.label}
+          </th>
         ))}
       </tr>
     </thead>
