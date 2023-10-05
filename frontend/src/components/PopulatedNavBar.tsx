@@ -5,12 +5,19 @@ import NavDropdown from "./nav/NavDropdown";
 import NavItem from "./nav/NavItem";
 
 const PopulatedNavBar = () => {
+  const handleSearch = (searchQuery: string | number) => {
+    console.log("Search Query:", searchQuery);
+    // Implement search functionality here
+    // You can now use the searchQuery to filter your articles
+  };
+
   return (
     <NavBar>
       <NavItem>SPEED</NavItem>
       <NavItem route="/" end>
         Home
       </NavItem>
+
       <NavItem dropdown route="/articles">
         Articles <IoMdArrowDropdown />
         <NavDropdown>
