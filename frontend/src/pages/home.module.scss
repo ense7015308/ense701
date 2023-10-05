@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.heading {
+  margin-bottom: 20px;
+  font-size: 36px;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  width: 500px;
+  padding: 10px;
+  font-size: 26px;
+}
+
+.searchButton {
+  padding: 10px 20px;
+  font-size: 26px;
+}
+
+.resultsContainer {
+  padding: 10px 20px;
+  font-size: 26px;
+}
