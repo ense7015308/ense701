@@ -67,6 +67,16 @@ const Articles = () => {
     </div>
   );
 };
-
+const fetchArticles = async () => {
+  try {
+    const response = await axios.get(`${config.apiUrl}/api/articles`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching articles: ", error);
+    throw error; // Re-throw the error to be caught in the calling function
+  }
+};
 // export
 export default Articles;
+export type { Article }; // Export the Article type
+export { fetchArticles };
