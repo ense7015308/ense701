@@ -22,6 +22,7 @@ const NewDiscussion = () => {
   const [num, setNum] = useState<number>(0);
   const [pages, setPages] = useState("");
   const [doi, setDoi] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   
   // initialise router
   const router = useRouter();
@@ -62,15 +63,39 @@ const NewDiscussion = () => {
   
     console.log(JSON.stringify(articleData));
   
-    axios
-      .post(`${config.apiUrl}/api/articles`, articleData)
-      .then(() => {
-      })
-      .catch((error) => {
-        console.log('Error logging article: ', error);
-      });
+    try {
+      const checkDuplicateResponse = await axios.get(
+        `${config.apiUrl}/api/articles`,
+        {
+          params: { title: articleData.title },
+        }
+      );
   
-    router.push('/articles');
+      if (checkDuplicateResponse.data.length > 0) {
+        // A duplicate article title exists, show an error message
+        setFeedbackMessage('Article with the same title already exists');
+      } else {
+        // No duplicate found, proceed to create the article
+        const createArticleResponse = await axios.post(
+          `${config.apiUrl}/api/articles`,
+          articleData
+        );
+  
+        if (createArticleResponse.status === 200) {
+          setFeedbackMessage(createArticleResponse.data.msg);
+          router.push('/articles');
+        } else {
+          // Handle other status codes if necessary
+          setFeedbackMessage('Unexpected response from server');
+        }
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        setFeedbackMessage(error.response.data.msg);
+      } else {
+        setFeedbackMessage('Error adding the article');
+      }
+    }
   };
 
   // helper methods for the authors array
@@ -99,6 +124,9 @@ const NewDiscussion = () => {
 
       {/* heading */}
       <h1>New Article</h1>
+
+      {/* Place this right before your form */}
+{feedbackMessage && <p className="feedback">{feedbackMessage}</p>}
 
       {/* form */}
       <form className={formStyles.form} onSubmit={submitNewArticle}>
