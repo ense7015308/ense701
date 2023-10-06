@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Article, fetchArticles } from "../pages/articles/index";
-import styles from "./Home.module.scss"; // Import a SCSS module for styling
+import styles from "./home.module.scss"; // Import a SCSS module for styling
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
