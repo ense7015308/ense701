@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Article, fetchArticles } from "../pages/articles/index";
 import styles from "./home.module.scss"; // Import a SCSS module for styling
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([]);
-
-  useEffect(() => {
-    handleSearch(); // Load all articles initially
-  }, []);
 
   const handleSearch = async () => {
     try {
@@ -40,7 +36,7 @@ export default function Home() {
         </button>
       </div>
       <div id="searchResults" className={styles.resultsContainer}>
-        <h3>Searching Result:</h3>
+        <h3>Searching result:</h3>
         {matchingArticles.length > 0 ? (
           <table className={styles.resultsTable}>
             <thead>
