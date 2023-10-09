@@ -1,0 +1,20 @@
+.borderedSortableTable {
+  border: 1px solid black;
+  width: 100%; /* Set table width to 100% */
+}
+
+/* Add border to table rows */
+.borderedSortableTable tr {
+  border: 1px solid black;
+}
+
+/* Add border to table cells (columns) */
+.borderedSortableTable td {
+  border: 1px solid black;
+}
+
+/* Add border to table headers (th) */
+.borderedSortableTable th {
+  border: 1px solid black;
+  padding: 0.5em; /* Optional: Add padding for better spacing */
+}

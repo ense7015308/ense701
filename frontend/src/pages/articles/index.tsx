@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import SortableTable from "../../components/table/SortableTable";
 import axios from "axios";
 import config from "../../config";
+import tableStyles from "../../components/table/tableStyles.module.scss";
 
 // interface initialises article attributes and datatypes
 interface Article {
@@ -39,14 +40,14 @@ const Articles = () => {
     { key: "doi", label: "DOI" },
   ];
 
-  // useEffect to get articles from mongodb 
+  // useEffect to get articles from mongodb
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         const response = await axios.get(`${config.apiUrl}/api/articles`);
         setArticles(response.data);
       } catch (error) {
-        console.error('Error fetching articles: ', error);
+        console.error("Error fetching articles: ", error);
       }
     };
     fetchArticles();
@@ -55,16 +56,27 @@ const Articles = () => {
   // return index page
   return (
     <div className="container">
-
       {/* headings */}
       <h1>Articles Index Page</h1>
       <p>Page containing a table of articles:</p>
 
       {/* table of articles using initialised headings */}
-      <SortableTable headers={headers} data={articles} />
+      <div className={tableStyles.borderedSortableTable}>
+        <SortableTable headers={headers} data={articles} />
+      </div>
     </div>
   );
 };
-
+const fetchArticles = async () => {
+  try {
+    const response = await axios.get(`${config.apiUrl}/api/articles`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching articles: ", error);
+    throw error; // Re-throw the error to be caught in the calling function
+  }
+};
 // export
 export default Articles;
+export type { Article }; // Export the Article type
+export { fetchArticles };
