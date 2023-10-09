@@ -30,7 +30,7 @@ const NewDiscussion = () => {
   const [article, setArticle] = useState({
     title: '', 
     authors: [''],
-    journName: '',
+    journname: '',
     pubyear: 0,
     volume: 0,
     num: 0,
@@ -52,7 +52,7 @@ const NewDiscussion = () => {
     const articleData = {
       title,
       authors,
-      journName,
+      journname: journName,
       pubyear: pubYear,
       volume: volume,
       num: num,
