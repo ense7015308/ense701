@@ -22,6 +22,8 @@ const NewDiscussion = () => {
   const [num, setNum] = useState<number>(0);
   const [pages, setPages] = useState("");
   const [doi, setDoi] = useState("");
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // initialise router
   const router = useRouter();
@@ -48,6 +50,7 @@ const NewDiscussion = () => {
   // arrow function that write input values to article and sends to mongoDB
   const submitNewArticle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
   
     const articleData = {
       title,
@@ -59,18 +62,23 @@ const NewDiscussion = () => {
       pages,
       doi,
     };
-  
-    console.log(JSON.stringify(articleData));
-  
+
     axios
-      .post(`${config.apiUrl}/api/articles`, articleData)
-      .then(() => {
-      })
-      .catch((error) => {
-        console.log('Error logging article: ', error);
-      });
+    .post(`${config.apiUrl}/api/articles`, articleData)
+    .then((response) => {
+        setFeedback(response.data.msg);
+    })
+    .catch((err) => {
+        if (err.response && err.response.data.msg) {
+            setFeedback(err.response.data.msg);
+        } else {
+            setFeedback('Article with the given title already exists. Please use a different title.');
+        }
+    })
+    .finally(() => {
+        setIsSubmitting(false);
+    });
   
-    router.push('/articles');
   };
 
   // helper methods for the authors array
@@ -99,6 +107,8 @@ const NewDiscussion = () => {
 
       {/* heading */}
       <h1>New Article</h1>
+
+      {feedback && <p>{feedback}</p>}
 
       {/* form */}
       <form className={formStyles.form} onSubmit={submitNewArticle}>
@@ -242,9 +252,9 @@ const NewDiscussion = () => {
         />
 
         {/* button to submit form */}
-        <button className={formStyles.formItem} type="submit">
-          Submit
-        </button>
+        <button className={formStyles.formItem} type="submit" disabled={isSubmitting}>
+  {isSubmitting ? 'Submitting...' : 'Submit'}
+</button>
       </form>
     </div>
   );
