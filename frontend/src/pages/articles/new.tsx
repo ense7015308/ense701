@@ -67,6 +67,9 @@ const NewDiscussion = () => {
     .post(`${config.apiUrl}/api/articles`, articleData)
     .then((response) => {
         setFeedback(response.data.msg);
+        setTimeout(() => {
+          router.push('/articles');
+      }, 2000);
     })
     .catch((err) => {
         if (err.response && err.response.data.msg) {
