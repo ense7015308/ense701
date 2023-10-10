@@ -29,10 +29,18 @@
   font-size: 1.5em;
 }
 
-.feedback {
+.successFeedback {
   padding: 1em;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
+  background-color: green;
+  border: 1px solid darkgreen;
+  color: white;
+  border-radius: 4px;
+}
+
+.errorFeedback {
+  padding: 1em;
+  background-color: red;
+  border: 1px solid darkred;
+  color: white;
   border-radius: 4px;
 }

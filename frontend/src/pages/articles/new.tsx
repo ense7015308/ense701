@@ -24,7 +24,8 @@ const NewDiscussion = () => {
   const [doi, setDoi] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+  const [feedbackType, setFeedbackType] = useState<"success" | "error" | null>(null);
+
   // initialise router
   const router = useRouter();
 
@@ -67,6 +68,7 @@ const NewDiscussion = () => {
     .post(`${config.apiUrl}/api/articles`, articleData)
     .then((response) => {
         setFeedback(response.data.msg);
+        setFeedbackType('success'); 
         setTimeout(() => {
           router.push('/articles');
       }, 2000);
@@ -76,6 +78,7 @@ const NewDiscussion = () => {
             setFeedback(err.response.data.msg);
         } else {
             setFeedback('Article with the given title already exists. Please use a different title.');
+            setFeedbackType('error');
         }
     })
     .finally(() => {
@@ -111,7 +114,12 @@ const NewDiscussion = () => {
       {/* heading */}
       <h1>New Article</h1>
 
-      {feedback && <p>{feedback}</p>}
+      {feedback && (
+  <p className={feedbackType === 'success' ? formStyles.successFeedback : feedbackType === 'error' ? formStyles.errorFeedback : formStyles.feedback}>
+    {feedback}
+  </p>
+)}
+
 
       {/* form */}
       <form className={formStyles.form} onSubmit={submitNewArticle}>
