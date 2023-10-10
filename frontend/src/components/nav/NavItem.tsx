@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 import styles from "./Nav.module.scss";
 
 type Props = {
