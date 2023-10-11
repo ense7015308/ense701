@@ -1,16 +1,17 @@
-// models/Book.js
+// models/Article.js
 
 const mongoose = require('mongoose');
 
 const ArticleSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true 
   },
   authors: [{
     type: String,
   }],
-  journname: {
+  journName: {
     type: String,
   },
   pubyear: {

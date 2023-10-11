@@ -33,12 +33,16 @@ router.get('/:id', (req, res) => {
 // @description add/save book
 // @access Public
 router.post('/', (req, res) => {
-  console.log('Received: ', req.body);
   Article.create(req.body)
-    .then(article => res.json({ msg: 'Article added successfully' }))
+    .then(article => {
+        res.json({ msg: 'Article added successfully' });
+    })
     .catch(err => {
-      console.log(err); // Move this line inside the catch block
-      res.status(400).json({ error: 'Unable to add this article' });
+        if (err.code === 11000) {
+            res.status(400).json({ msg: 'Article with the given title already exists. Please use a different title.' });
+        } else {
+            res.status(400).json({ msg: 'Unable to add this article' });
+        }
     });
 });
 

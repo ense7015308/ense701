@@ -1,3 +1,4 @@
+
 // //module.exports = {
 //     // Specify the test environment (e.g., jsdom for browser-like environment)
 //     testEnvironment: 'jsdom',
@@ -9,15 +10,7 @@
 //     transform: {
 //       '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest', // For JavaScript and TypeScript files
 //       '^.+\\.css$': 'jest-transform-css',      // For CSS files
-//       '^.+\\.scss$': 'jest-transform-scss',    // For SCSS files
-//     },
-  
-//     // Specify file extensions for TypeScript, CSS, and SCSS
-//     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'css', 'scss'],
-  
-//     // Optionally, define a list of paths to modules that run before each test
-//     setupFilesAfterEnv: ['./jest.setup.js'],
-// //};  
+
 module.exports = {
   testEnvironment: 'jsdom',
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
@@ -27,4 +20,4 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   }
-};
+}
