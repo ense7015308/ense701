@@ -69,13 +69,13 @@ export default function Home() {
             <thead>
               <tr>
                 <th onClick={() => handleSort("title")}>Title</th>
-                <th>Authors</th>
-                <th>Journal Name</th>
-                <th>Publication Year</th>
-                <th>Volume</th>
-                <th>Number</th>
-                <th>Pages</th>
-                <th>DOI</th>
+                <th onClick={() => handleSort("authors")}>Authors</th>
+                <th onClick={() => handleSort("journname")}>Journal Name</th>
+                <th onClick={() => handleSort("pubyear")}>Publication Year</th>
+                <th onClick={() => handleSort("volume")}>Volume</th>
+                <th onClick={() => handleSort("num")}>Number</th>
+                <th onClick={() => handleSort("pages")}>Pages</th>
+                <th onClick={() => handleSort("doi")}>DOI</th>
               </tr>
             </thead>
             <tbody>
