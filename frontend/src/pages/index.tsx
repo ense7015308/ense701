@@ -33,6 +33,12 @@ export default function Home() {
       const aValue = a[column];
       const bValue = b[column];
       
+      if (column === "authors") {
+        const aAuthorsString = a.authors.join(", ");
+        const bAuthorsString = b.authors.join(", ");
+        return isAsc ? aAuthorsString.localeCompare(bAuthorsString) : bAuthorsString.localeCompare(aAuthorsString);
+      }
+
       if (typeof aValue === "string" && typeof bValue === "string") {
         return isAsc ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
       } else if (typeof aValue === "number" && typeof bValue === "number") {
