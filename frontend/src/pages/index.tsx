@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Article, fetchArticles } from "../pages/articles/index";
-import styles from "./home.module.scss"; // Import a SCSS module for styling
+import styles from "./home.module.scss";
+
+// Define a type for sortable columns
+type SortableColumns = "title" | "authors" | "journname" | "pubyear" | "volume" | "num" | "pages" | "doi";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([]);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortedColumn, setSortedColumn] = useState<SortableColumns | null>(null);
 
   const handleSearch = async () => {
     try {
@@ -16,6 +21,28 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching articles: ", error);
     }
+  };
+
+  const handleSort = (column: SortableColumns) => {
+    const isAsc = sortedColumn === column && sortOrder === "asc";
+    setSortedColumn(column);
+    setSortOrder(isAsc ? "desc" : "asc");
+  
+    const sortedArticles = [...matchingArticles];
+    sortedArticles.sort((a, b) => {
+      const aValue = a[column];
+      const bValue = b[column];
+      
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return isAsc ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+      } else if (typeof aValue === "number" && typeof bValue === "number") {
+        return isAsc ? aValue - bValue : bValue - aValue;
+      } else {
+        return 0;
+      }
+    });
+  
+    setMatchingArticles(sortedArticles);
   };
 
   return (
@@ -41,7 +68,7 @@ export default function Home() {
           <table className={styles.resultsTable}>
             <thead>
               <tr>
-                <th>Title</th>
+                <th onClick={() => handleSort("title")}>Title</th>
                 <th>Authors</th>
                 <th>Journal Name</th>
                 <th>Publication Year</th>
