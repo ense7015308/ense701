@@ -36,10 +36,13 @@ export default function Home() {
       if (column === "authors") {
         const aAuthorsString = a.authors.join(", ");
         const bAuthorsString = b.authors.join(", ");
-        return isAsc ? aAuthorsString.localeCompare(bAuthorsString) : bAuthorsString.localeCompare(aAuthorsString);
-      }
 
-      if (typeof aValue === "string" && typeof bValue === "string") {
+        if (isAsc) {
+          return aAuthorsString.localeCompare(bAuthorsString);
+        } else {
+          return bAuthorsString.localeCompare(aAuthorsString);
+        }
+      } else if (typeof aValue === "string" && typeof bValue === "string") {
         return isAsc ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
       } else if (typeof aValue === "number" && typeof bValue === "number") {
         return isAsc ? aValue - bValue : bValue - aValue;
