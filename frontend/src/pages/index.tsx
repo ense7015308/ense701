@@ -18,6 +18,7 @@ type SortableColumns =
 export default function Home() {
   // State for the search term entered by the user
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedMethod, setSelectedMethod] = useState<string>("");
 
   // State for storing articles that match the search term
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([]);
@@ -27,22 +28,40 @@ export default function Home() {
   );
 
   // Function to handle search functionality
-  const handleSearch = async () => {
+  const handleKeywordSearch = async () => {
     try {
       // Fetch all articles
       const articles = await fetchArticles();
 
       // Filter articles to match the entered search term
-      const matchingArticles = articles.filter((article: Article) => {
+      const filteredArticles = articles.filter((article: Article) => {
         return article.title.toLowerCase().includes(searchTerm.toLowerCase());
       });
 
       // Update state with the matching articles
-      setMatchingArticles(matchingArticles);
+      setMatchingArticles(filteredArticles);
     } catch (error) {
       // Log any error that arises during fetching or processing articles
       console.error("Error fetching articles: ", error);
     }
+  };
+  const handleFilterSearch = async () => {
+    try {
+      const articles = await fetchArticles();
+
+      // Filter articles based on the selected SE method
+      const filteredArticles = articles.filter((article: Article) =>
+        article.title.toLowerCase().includes(selectedMethod.toLowerCase())
+      );
+
+      setMatchingArticles(filteredArticles);
+    } catch (error) {
+      console.error("Error fetching articles: ", error);
+    }
+  };
+
+  const handleMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedMethod(event.target.value);
   };
 
   const handleSort = (column: SortableColumns) => {
@@ -84,10 +103,87 @@ export default function Home() {
           className={styles.searchInput}
         />
         {/* Button to trigger the search */}
-        <button onClick={handleSearch} className={styles.searchButton}>
-          Search
+        <button onClick={handleKeywordSearch} className={styles.searchButton}>
+          Keyword Search
         </button>
       </div>
+      {/* Filter Search */}
+      <div className={styles.filterOptions}>
+        <label className={styles.labelText}>
+          <input
+            type="radio"
+            value="Waterfall"
+            className={styles.radioInput}
+            checked={selectedMethod === "Waterfall"}
+            onChange={handleMethodChange}
+          />
+          Waterfall
+        </label>
+        <label className={styles.labelText}>
+          <input
+            type="radio"
+            value="Agile"
+            className={styles.radioInput}
+            checked={selectedMethod === "Agile"}
+            onChange={handleMethodChange}
+          />
+          Agile
+        </label>
+        <label className={styles.labelText}>
+          <input
+            type="radio"
+            value="V-Model"
+            className={styles.radioInput}
+            checked={selectedMethod === "V-Model"}
+            onChange={handleMethodChange}
+          />
+          V-Model(Validation and Verification)
+        </label>
+        <label className={styles.labelText}>
+          <input
+            type="radio"
+            value="Scrum"
+            className={styles.radioInput}
+            checked={selectedMethod === "Scrum"}
+            onChange={handleMethodChange}
+          />
+          Scrum
+        </label>
+        <label className={styles.labelText}>
+          <input
+            type="radio"
+            value="DevOps"
+            className={styles.radioInput}
+            checked={selectedMethod === "DevOps"}
+            onChange={handleMethodChange}
+          />
+          DevOps
+        </label>
+        <label className={styles.labelText}>
+          <input
+            type="radio"
+            value="Test-Driven Development"
+            className={styles.radioInput}
+            checked={selectedMethod === "Test-Driven Development"}
+            onChange={handleMethodChange}
+          />
+          Test-Driven Development(TDD)
+        </label>
+        <label className={styles.labelText}>
+          <input
+            type="radio"
+            value="Rapid Application Development"
+            className={styles.radioInput}
+            checked={selectedMethod === "Rapid Application Development"}
+            onChange={handleMethodChange}
+          />
+          Rapid Application Development(RAD)
+        </label>
+      </div>
+      <button onClick={handleFilterSearch} className={styles.searchButton}>
+        SE Method Search
+      </button>
+
       {/* Container to display the search results */}
       <div id="searchResults" className={styles.resultsContainer}>
         <h3>Searching Result:</h3>
