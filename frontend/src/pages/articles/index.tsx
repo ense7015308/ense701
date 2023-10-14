@@ -58,7 +58,9 @@ const Articles = () => {
     <div className="container">
       {/* headings */}
       <h1>Articles Index Page</h1>
-      <p>Page containing a table of articles:</p>
+      <h3>
+        <p>Page containing a table of articles:</p>
+      </h3>
 
       {/* table of articles using initialised headings */}
       <div className={tableStyles.borderedSortableTable}>
