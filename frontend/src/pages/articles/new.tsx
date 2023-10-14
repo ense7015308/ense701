@@ -22,7 +22,10 @@ const NewDiscussion = () => {
   const [num, setNum] = useState<number>(0);
   const [pages, setPages] = useState("");
   const [doi, setDoi] = useState("");
-  
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<"success" | "error" | null>(null);
+
   // initialise router
   const router = useRouter();
 
@@ -30,7 +33,7 @@ const NewDiscussion = () => {
   const [article, setArticle] = useState({
     title: '', 
     authors: [''],
-    journName: '',
+    journname: '',
     pubyear: 0,
     volume: 0,
     num: 0,
@@ -48,29 +51,40 @@ const NewDiscussion = () => {
   // arrow function that write input values to article and sends to mongoDB
   const submitNewArticle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
   
     const articleData = {
       title,
       authors,
-      journName,
+      journname: journName,
       pubyear: pubYear,
       volume: volume,
       num: num,
       pages,
       doi,
     };
-  
-    console.log(JSON.stringify(articleData));
-  
+
     axios
-      .post(`${config.apiUrl}/api/articles`, articleData)
-      .then(() => {
-      })
-      .catch((error) => {
-        console.log('Error logging article: ', error);
-      });
+    .post(`${config.apiUrl}/api/articles`, articleData)
+    .then((response) => {
+        setFeedback(response.data.msg);
+        setFeedbackType('success'); 
+        setTimeout(() => {
+          router.push('/articles');
+      }, 2000);
+    })
+    .catch((err) => {
+        if (err.response && err.response.data.msg) {
+            setFeedback(err.response.data.msg);
+        } else {
+            setFeedback('Article with the given title already exists. Please use a different title.');
+            setFeedbackType('error');
+        }
+    })
+    .finally(() => {
+        setIsSubmitting(false);
+    });
   
-    router.push('/articles');
   };
 
   // helper methods for the authors array
@@ -99,6 +113,13 @@ const NewDiscussion = () => {
 
       {/* heading */}
       <h1>New Article</h1>
+
+      {feedback && (
+  <p className={feedbackType === 'success' ? formStyles.successFeedback : feedbackType === 'error' ? formStyles.errorFeedback : formStyles.feedback}>
+    {feedback}
+  </p>
+)}
+
 
       {/* form */}
       <form className={formStyles.form} onSubmit={submitNewArticle}>
@@ -242,9 +263,9 @@ const NewDiscussion = () => {
         />
 
         {/* button to submit form */}
-        <button className={formStyles.formItem} type="submit">
-          Submit
-        </button>
+        <button className={formStyles.formItem} type="submit" disabled={isSubmitting}>
+  {isSubmitting ? 'Submitting...' : 'Submit'}
+</button>
       </form>
     </div>
   );

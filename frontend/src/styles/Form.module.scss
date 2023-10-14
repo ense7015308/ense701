@@ -28,3 +28,21 @@
   flex-grow: 0;
   font-size: 1.5em;
 }
+
+.successFeedback,
+.errorFeedback {
+  display: inline-block;
+  padding: 1em;
+  border-radius: 4px;
+  color: white;
+}
+
+.successFeedback {
+  background-color: green;
+  border: 1px solid darkgreen;
+}
+
+.errorFeedback {
+  background-color: red;
+  border: 1px solid darkred;
+}

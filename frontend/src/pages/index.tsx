@@ -1,8 +1,18 @@
 // Import necessary React and utility functions
 import React, { useState } from "react";
 import { Article, fetchArticles } from "../pages/articles/index";
-// Import styling for the Home component
 import styles from "./home.module.scss";
+
+// Define a type for sortable columns
+type SortableColumns =
+  | "title"
+  | "authors"
+  | "journname"
+  | "pubyear"
+  | "volume"
+  | "num"
+  | "pages"
+  | "doi";
 
 // Define the Home component
 export default function Home() {
@@ -11,6 +21,10 @@ export default function Home() {
 
   // State for storing articles that match the search term
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([]);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortedColumn, setSortedColumn] = useState<SortableColumns | null>(
+    null
+  );
 
   // Function to handle search functionality
   const handleSearch = async () => {
@@ -31,7 +45,30 @@ export default function Home() {
     }
   };
 
-  // Render the Home component
+  const handleSort = (column: SortableColumns) => {
+    const isAsc = sortedColumn === column && sortOrder === "asc";
+    setSortedColumn(column);
+    setSortOrder(isAsc ? "desc" : "asc");
+
+    const sortedArticles = [...matchingArticles];
+    sortedArticles.sort((a, b) => {
+      const aValue = a[column];
+      const bValue = b[column];
+
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return isAsc
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      } else if (typeof aValue === "number" && typeof bValue === "number") {
+        return isAsc ? aValue - bValue : bValue - aValue;
+      } else {
+        return 0;
+      }
+    });
+
+    setMatchingArticles(sortedArticles);
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>
@@ -59,7 +96,7 @@ export default function Home() {
           <table className={styles.resultsTable}>
             <thead>
               <tr>
-                <th>Title</th>
+                <th onClick={() => handleSort("title")}>Title</th>
                 <th>Authors</th>
                 <th>Journal Name</th>
                 <th>Publication Year</th>
