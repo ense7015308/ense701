@@ -1,29 +1,44 @@
+// Import necessary React and utility functions
 import React, { useState } from "react";
 import { Article, fetchArticles } from "../pages/articles/index";
-import styles from "./home.module.scss"; // Import a SCSS module for styling
+// Import styling for the Home component
+import styles from "./home.module.scss";
 
+// Define the Home component
 export default function Home() {
+  // State for the search term entered by the user
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  // State for storing articles that match the search term
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([]);
 
+  // Function to handle search functionality
   const handleSearch = async () => {
     try {
+      // Fetch all articles
       const articles = await fetchArticles();
+
+      // Filter articles to match the entered search term
       const matchingArticles = articles.filter((article: Article) => {
         return article.title.toLowerCase().includes(searchTerm.toLowerCase());
       });
+
+      // Update state with the matching articles
       setMatchingArticles(matchingArticles);
     } catch (error) {
+      // Log any error that arises during fetching or processing articles
       console.error("Error fetching articles: ", error);
     }
   };
 
+  // Render the Home component
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>
         Software Practice Empirical Evidence Database (SPEED)
       </h1>
       <div className={styles.searchContainer}>
+        {/* Input field for the user to enter search term */}
         <input
           type="text"
           value={searchTerm}
@@ -31,13 +46,16 @@ export default function Home() {
           placeholder="Please enter your search keywords"
           className={styles.searchInput}
         />
+        {/* Button to trigger the search */}
         <button onClick={handleSearch} className={styles.searchButton}>
           Search
         </button>
       </div>
+      {/* Container to display the search results */}
       <div id="searchResults" className={styles.resultsContainer}>
-        <h3>Searching result:</h3>
+        <h3>Searching Result:</h3>
         {matchingArticles.length > 0 ? (
+          // Display the search results in a table format
           <table className={styles.resultsTable}>
             <thead>
               <tr>
@@ -52,6 +70,7 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
+              {/* Iterate over each matching article and display its details */}
               {matchingArticles.map((article) => (
                 <tr key={article.id}>
                   <td>{article.title}</td>
@@ -67,6 +86,7 @@ export default function Home() {
             </tbody>
           </table>
         ) : (
+          // Display a message if no matching articles are found
           <div>No matching articles found</div>
         )}
       </div>
