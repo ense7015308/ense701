@@ -33,7 +33,7 @@ const NewDiscussion = () => {
   const [article, setArticle] = useState({
     title: '', 
     authors: [''],
-    journname: '',
+    journname: 'hi',
     pubyear: 0,
     volume: 0,
     num: 0,
