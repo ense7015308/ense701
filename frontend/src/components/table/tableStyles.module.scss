@@ -1,20 +1,29 @@
 .borderedSortableTable {
-  border: 1px solid black;
-  width: 100%; /* Set table width to 100% */
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center; /* Center-align the table content */
 }
 
-/* Add border to table rows */
-.borderedSortableTable tr {
-  border: 1px solid black;
-}
-
-/* Add border to table cells (columns) */
+.borderedSortableTable th,
 .borderedSortableTable td {
-  border: 1px solid black;
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
 }
 
-/* Add border to table headers (th) */
 .borderedSortableTable th {
-  border: 1px solid black;
-  padding: 0.5em; /* Optional: Add padding for better spacing */
+  background-color: #f2f2f2;
+}
+
+.borderedSortableTable th:last-child,
+.borderedSortableTable td:last-child {
+  width: 10%; /* Set the width of the last column to 10% */
+}
+
+.borderedSortableTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.borderedSortableTable tr:hover {
+  background-color: #ddd; /* Highlight row on hover */
 }
