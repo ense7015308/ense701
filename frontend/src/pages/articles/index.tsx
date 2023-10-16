@@ -21,6 +21,7 @@ interface Article {
   num: number;
   pages: string;
   doi: string;
+  rating: number;
 }
 
 // arrow function to fetch articles
@@ -38,6 +39,7 @@ const Articles = () => {
     { key: "num", label: "Number" },
     { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
+    { key: "rating", label: "Rating" }
   ];
 
   // useEffect to get articles from mongodb
