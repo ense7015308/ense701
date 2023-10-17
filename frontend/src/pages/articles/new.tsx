@@ -16,7 +16,7 @@ const NewDiscussion = () => {
   // initialise constants for form input
   const [title, setTitle] = useState("");
   const [authors, setAuthors] = useState<string[]>([]);
-  const [journName, setJournName] = useState("");
+  const [journname, setJournName] = useState("");
   const [pubYear, setPubYear] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0);
   const [num, setNum] = useState<number>(0);
@@ -56,7 +56,7 @@ const NewDiscussion = () => {
     const articleData = {
       title,
       authors,
-      journname: journName,
+      journname: journname,
       pubyear: pubYear,
       volume: volume,
       num: num,
@@ -170,13 +170,13 @@ const NewDiscussion = () => {
         </button>
 
         {/* journal title and entry field */}
-        <label htmlFor="journName">Journal Name:</label>
+        <label htmlFor="journname">Journal Name:</label>
         <input
           className={formStyles.formItem}
           type="text"
-          name="journName"
-          id="journName"
-          value={journName}
+          name="journname"
+          id="journname"
+          value={journname}
           onChange={(event) => {
             setJournName(event.target.value);
           }}
