@@ -11,7 +11,7 @@ const ArticleSchema = new mongoose.Schema({
   authors: [{
     type: String,
   }],
-  journName: {
+  journname: {
     type: String,
   },
   pubyear: {
