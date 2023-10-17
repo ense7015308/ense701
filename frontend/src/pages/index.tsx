@@ -140,13 +140,27 @@ export default function Home() {
         </button>
       </div>
       <div className={styles.yearRangeContainer}>
-    <label>From Year: 
-      <input type="number" value={startYear} onChange={(e) => setStartYear(e.target.value)} placeholder="Start Year" className={styles.yearInput} />
-    </label>
-    <label>To Year: 
-      <input type="number" value={endYear} onChange={(e) => setEndYear(e.target.value)} placeholder="End Year" className={styles.yearInput} />
-    </label>
-  </div>
+        <label>
+          From Year:
+          <input
+            type="number"
+            value={startYear}
+            onChange={(e) => setStartYear(e.target.value)}
+            placeholder="Start Year"
+            className={styles.yearInput}
+          />
+        </label>
+        <label>
+          To Year:
+          <input
+            type="number"
+            value={endYear}
+            onChange={(e) => setEndYear(e.target.value)}
+            placeholder="End Year"
+            className={styles.yearInput}
+          />
+        </label>
+      </div>
 
       {/* Filter Search */}
       <div className={styles.filterOptions}>
