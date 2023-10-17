@@ -41,33 +41,42 @@ export default function Home() {
   const handleKeywordSearch = async () => {
     try {
       const articles = await fetchArticles();
-  
+
       const filteredArticles = articles.filter((article: Article) => {
-        const isWithinYearRange = (!startYear || article.pubyear >= parseInt(startYear)) && (!endYear || article.pubyear <= parseInt(endYear));
-        return article.title.toLowerCase().includes(searchTerm.toLowerCase()) && isWithinYearRange;
+        const isWithinYearRange =
+          (!startYear || article.pubyear >= parseInt(startYear)) &&
+          (!endYear || article.pubyear <= parseInt(endYear));
+        return (
+          article.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          isWithinYearRange
+        );
       });
-  
+
       setMatchingArticles(filteredArticles);
     } catch (error) {
       console.error("Error fetching articles: ", error);
     }
   };
-  
+
   const handleFilterSearch = async () => {
     try {
       const articles = await fetchArticles();
-  
+
       const filteredArticles = articles.filter((article: Article) => {
-        const isWithinYearRange = (!startYear || article.pubyear >= parseInt(startYear)) && (!endYear || article.pubyear <= parseInt(endYear));
-        return article.title.toLowerCase().includes(selectedMethod.toLowerCase()) && isWithinYearRange;
+        const isWithinYearRange =
+          (!startYear || article.pubyear >= parseInt(startYear)) &&
+          (!endYear || article.pubyear <= parseInt(endYear));
+        return (
+          article.title.toLowerCase().includes(selectedMethod.toLowerCase()) &&
+          isWithinYearRange
+        );
       });
-  
+
       setMatchingArticles(filteredArticles);
     } catch (error) {
       console.error("Error fetching articles: ", error);
     }
   };
-  
 
   const handleMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedMethod(event.target.value);
@@ -140,7 +149,7 @@ export default function Home() {
         </button>
       </div>
       <div className={styles.yearRangeContainer}>
-        <label>
+        <label className={styles.yearLabel}>
           From Year:
           <input
             type="number"
@@ -150,7 +159,7 @@ export default function Home() {
             className={styles.yearInput}
           />
         </label>
-        <label>
+        <label className={styles.yearLabel}>
           To Year:
           <input
             type="number"

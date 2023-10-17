@@ -82,13 +82,18 @@
   padding: 30px;
 }
 .yearRangeContainer {
+  font-size: 24px;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
 .yearInput {
-  width: 100px;
+  font-size: 24px;
+  width: 150px;
   padding: 10px;
   margin-left: 10px;
+}
+.yearLabel {
+  padding: 15px;
 }
