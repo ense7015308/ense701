@@ -56,7 +56,7 @@ const NewDiscussion = () => {
     const articleData = {
       title,
       authors,
-      journname,
+      journname: journname,
       pubyear: pubYear,
       volume: volume,
       num: num,
