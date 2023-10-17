@@ -67,3 +67,33 @@
 .resultsTable tr:hover {
   background-color: #ddd;
 }
+.radioInput {
+  width: 25px; // Adjust based on your desired size
+  height: 25px;
+  margin-right: 5px; // Some space between radio and its label
+  vertical-align: middle; // To align with the text
+}
+.labelText {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: normal;
+}
+.filterOptions {
+  padding: 30px;
+}
+.yearRangeContainer {
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.yearInput {
+  font-size: 24px;
+  width: 150px;
+  padding: 10px;
+  margin-left: 10px;
+}
+.yearLabel {
+  padding: 15px;
+}
