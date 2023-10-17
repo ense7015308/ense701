@@ -81,3 +81,14 @@
 .filterOptions {
   padding: 30px;
 }
+.yearRangeContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.yearInput {
+  width: 100px;
+  padding: 10px;
+  margin-left: 10px;
+}
