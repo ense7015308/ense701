@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 // Load Article model
 const Article = require('../../models/Article');
 

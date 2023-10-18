@@ -9,6 +9,8 @@ import formStyles from "../../styles/Form.module.scss";
 import axios from 'axios';
 import config from "../../config";
 import { useRouter } from "next/router";
+import { Rating } from 'react-simple-star-rating'
+
 
 // constant 
 const NewDiscussion = () => {
@@ -25,6 +27,8 @@ const NewDiscussion = () => {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedbackType, setFeedbackType] = useState<"success" | "error" | null>(null);
+  const [rate, setRate] = useState<number>(0);
+
 
   // initialise router
   const router = useRouter();
@@ -39,6 +43,8 @@ const NewDiscussion = () => {
     num: 0,
     pages: '',
     doi: '',
+    rating: 0
+    
   })
 
   // eslint-disable-next-line no-unused-vars
@@ -62,6 +68,7 @@ const NewDiscussion = () => {
       num: num,
       pages,
       doi,
+      rating: rate
     };
 
     axios
@@ -97,6 +104,32 @@ const NewDiscussion = () => {
   const removeAuthor = (index: number) => {
     setAuthors(authors.filter((_, i) => i !== index));
   };
+
+    function MyComponent() {
+  
+    const handleRating = (rate: number) => {
+      setRate(rate)
+  
+      // other logic
+    }
+    // Optinal callback functions
+    const onPointerEnter = () => console.log('Enter')
+    const onPointerLeave = () => console.log('Leave')
+    const onPointerMove = (value: number, index: number) => console.log(value, index)
+  
+    return (
+      <div className='App'>
+      
+        <Rating
+          onClick={handleRating}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
+          onPointerMove={onPointerMove}
+        />
+        
+      </div>
+    )
+  }
 
   // change select author
   const changeAuthor = (index: number, value: string) => {
@@ -261,7 +294,22 @@ const NewDiscussion = () => {
             setDoi(event.target.value);
           }}
         />
-
+        <label htmlFor="rating">Rating:</label>
+        <input
+         className={formStyles.formItem}
+         type="number"
+         name="rating"
+         id="rating"
+         value={rate}
+        onChange={(event) => {
+          const val = event.target.value;
+          if (val === "") {
+            setRate(0);
+          } else {
+            setRate(parseInt(val));
+          }}
+        }
+         />
         {/* button to submit form */}
         <button className={formStyles.formItem} type="submit" disabled={isSubmitting}>
   {isSubmitting ? 'Submitting...' : 'Submit'}
