@@ -1,5 +1,5 @@
 import React from "react";
-import { MyComponent } from "../StarRating";
+import MyComponent from "../../pages/articles/new";
 
 
 interface SortableTableProps {
@@ -26,13 +26,7 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
       {data.map((row, i) => (
         <tr key={i}>
           {headers.map((header) => (
-            <td key={header.key}>
-            {header.key === "rating" ? (
-              <MyComponent />
-            ) : (
-              row[header.key]
-            )}
-          </td>
+           <td key={header.key}>{row[header.key]}</td>
           ))}
         </tr>
       ))}

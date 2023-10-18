@@ -21,7 +21,7 @@ interface Article {
   num: number;
   pages: string;
   doi: string;
-  rating: number;
+  rate: number;
 }
 
 // arrow function to fetch articles
@@ -54,6 +54,8 @@ const Articles = () => {
     };
     fetchArticles();
   }, []);
+  
+
 
   // return index page
   return (
@@ -75,6 +77,7 @@ const fetchArticles = async () => {
   try {
     const response = await axios.get(`${config.apiUrl}/api/articles`);
     return response.data;
+   
   } catch (error) {
     console.error("Error fetching articles: ", error);
     throw error; // Re-throw the error to be caught in the calling function
