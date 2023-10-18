@@ -25,6 +25,8 @@ export default function Home() {
   // search-related constants
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedMethod, setSelectedMethod] = useState<string>("");
+  const [startYear, setStartYear] = useState<string>("");
+  const [endYear, setEndYear] = useState<string>("");
 
   // State for storing articles that match the search term
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([]);
@@ -38,29 +40,37 @@ export default function Home() {
   // Function to handle search functionality
   const handleKeywordSearch = async () => {
     try {
-      // Fetch all articles
       const articles = await fetchArticles();
 
-      // Filter articles to match the entered search term
       const filteredArticles = articles.filter((article: Article) => {
-        return article.title.toLowerCase().includes(searchTerm.toLowerCase());
+        const isWithinYearRange =
+          (!startYear || article.pubyear >= parseInt(startYear)) &&
+          (!endYear || article.pubyear <= parseInt(endYear));
+        return (
+          article.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          isWithinYearRange
+        );
       });
 
-      // Update state with the matching articles
       setMatchingArticles(filteredArticles);
     } catch (error) {
-      // Log any error that arises during fetching or processing articles
       console.error("Error fetching articles: ", error);
     }
   };
+
   const handleFilterSearch = async () => {
     try {
       const articles = await fetchArticles();
 
-      // Filter articles based on the selected SE method
-      const filteredArticles = articles.filter((article: Article) =>
-        article.title.toLowerCase().includes(selectedMethod.toLowerCase())
-      );
+      const filteredArticles = articles.filter((article: Article) => {
+        const isWithinYearRange =
+          (!startYear || article.pubyear >= parseInt(startYear)) &&
+          (!endYear || article.pubyear <= parseInt(endYear));
+        return (
+          article.title.toLowerCase().includes(selectedMethod.toLowerCase()) &&
+          isWithinYearRange
+        );
+      });
 
       setMatchingArticles(filteredArticles);
     } catch (error) {
@@ -138,6 +148,29 @@ export default function Home() {
           Keyword Search
         </button>
       </div>
+      <div className={styles.yearRangeContainer}>
+        <label className={styles.yearLabel}>
+          From Year:
+          <input
+            type="number"
+            value={startYear}
+            onChange={(e) => setStartYear(e.target.value)}
+            placeholder="Start Year"
+            className={styles.yearInput}
+          />
+        </label>
+        <label className={styles.yearLabel}>
+          To Year:
+          <input
+            type="number"
+            value={endYear}
+            onChange={(e) => setEndYear(e.target.value)}
+            placeholder="End Year"
+            className={styles.yearInput}
+          />
+        </label>
+      </div>
+
       {/* Filter Search */}
       <div className={styles.filterOptions}>
         <label className={styles.labelText}>
