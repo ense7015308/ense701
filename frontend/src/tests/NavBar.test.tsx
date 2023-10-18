@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import NavBar from './NavBar';
+import NavBar from '../components/nav/NavBar';
 import '@testing-library/jest-dom';
 
 describe('NavBar component', () => {

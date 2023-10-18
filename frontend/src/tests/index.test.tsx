@@ -1,7 +1,7 @@
 import React from 'react'; // For React components
 import { render, waitFor } from '@testing-library/react'; // For rendering React components and waiting for asynchronous actions
 import axios from 'axios'; // For mocking HTTP requests with Jest
-import Index from './index'; 
+import Index from '../pages/articles/index'; 
 import '@testing-library/jest-dom';
 
 
