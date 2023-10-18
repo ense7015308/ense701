@@ -30,7 +30,7 @@ test('should fetch articles successfully', async () => {
         doi: 'doi2'
       }
     ];
-  
+  //spys on axios.get func and mocking it to resolve mockarticles
     jest.spyOn(axios, 'get').mockResolvedValue({ data: mockArticles });
   
     const { getByText } = render(<Index/>);
