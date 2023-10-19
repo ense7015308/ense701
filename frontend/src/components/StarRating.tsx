@@ -1,3 +1,7 @@
+/*
+  name:   StarRating.tsx
+  desc:   Component for rating articles
+*/
 import React, { useState } from "react";
 import axios from 'axios';
 import { Rating } from 'react-simple-star-rating'
@@ -20,14 +24,14 @@ export function MyComponent() {
       console.log(response.data);
     } catch (error) {
       console.error(error);
-      // Handle errors here (e.g., display an error message)
+      // Handle errors here 
     }
   };
   return (
     <div className="App">
       <Rating
         onClick={handleRating}
-        /* Other rating component props */
+       
       />
       <button onClick={saveRating}>Save Rating</button>
     </div>
