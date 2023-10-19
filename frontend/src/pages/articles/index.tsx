@@ -21,6 +21,7 @@ interface Article {
   num: number;
   pages: string;
   doi: string;
+  rate: number;
 }
 
 // arrow function to fetch articles
@@ -38,6 +39,7 @@ const Articles = () => {
     { key: "num", label: "Number" },
     { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
+    { key: "rating", label: "Rating" }
   ];
 
   // useEffect to get articles from mongodb
@@ -52,6 +54,8 @@ const Articles = () => {
     };
     fetchArticles();
   }, []);
+  
+
 
   // return index page
   return (
@@ -73,6 +77,7 @@ const fetchArticles = async () => {
   try {
     const response = await axios.get(`${config.apiUrl}/api/articles`);
     return response.data;
+   
   } catch (error) {
     console.error("Error fetching articles: ", error);
     throw error; // Re-throw the error to be caught in the calling function
