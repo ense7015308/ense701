@@ -29,6 +29,10 @@ const ArticleSchema = new mongoose.Schema({
   doi: {
     type: String,
   },
+  rating: {
+    type: Number,
+  }
+ 
 });
 
 module.exports = Article = mongoose.model('article', ArticleSchema);
